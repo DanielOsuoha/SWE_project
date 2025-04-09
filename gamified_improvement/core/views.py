@@ -4,6 +4,13 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
+@login_required
+def index(request):
+    context = {
+        'plans': Plan.objects.all(),  
+    }
+    return render(request, 'core/index.html', context)
+
 def home(request):
     return render(request, 'core/index.html')
 

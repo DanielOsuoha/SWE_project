@@ -11,6 +11,10 @@
     --transition: all 0.3s ease;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -19,11 +23,12 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--secondary-color);
+    background-color: #f0f0f0;
     padding-top: var(--header-height); 
+    padding-bottom: 60px; /* Space for bottom nav */
 }
 
 /* Header and Navigation */
@@ -428,4 +433,159 @@ input[type="checkbox"]:checked::after {
         margin: 2px;
         padding: 2rem;
     }
+}
+
+/* Dashboard Styles */
+.dashboard-header {
+    background-color: #000;
+    padding: 1rem;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.dashboard-header img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.streak-icon {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 1.5rem;
+}
+
+.search-bar {
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 1rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.category-button {
+    background-color: #000;
+    color: #ffd700;
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.category-button:hover {
+    transform: scale(1.05);
+}
+
+.category-button img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 0.5rem;
+}
+
+.plans {
+    padding: 0 1rem;
+}
+
+.plan-group {
+    margin-bottom: 2rem;
+}
+
+.plan-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.plan-card {
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.plan-card img {
+    width: 100px;
+    object-fit: cover;
+}
+
+.plan-details {
+    padding: 0.5rem 1rem;
+    flex-grow: 1;
+}
+
+.plan-title {
+    font-weight: bold;
+    margin: 0;
+}
+
+.plan-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.plan-rating {
+    color: gold;
+    font-size: 0.85rem;
+}
+
+.bottom-nav {
+    background-color: #000;
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5rem 0;
+    z-index: 1000;
+}
+
+.bottom-nav a {
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.bottom-nav div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.25rem;
+}
+
+.hidden {
+    display: none;
 }

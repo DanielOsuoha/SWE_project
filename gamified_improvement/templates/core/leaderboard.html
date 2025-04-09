@@ -1,134 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Leaderboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding-bottom: 60px; /* Space for nav */
-      background-color: #f0f0f0;
-    }
+{% extends "../base.html" %}
+{% load static %}
 
-    header {
-      background-color: #000;
-      color: #ffd700;
-      text-align: center;
-      padding: 1rem;
-    }
+{% block title %}Leaderboard{% endblock %}
 
-    .leaderboard-container {
-      max-width: 500px;
-      margin: 1rem auto;
-      background-color: white;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
+{% block content %}
+<div class="leaderboard-container">
+    <h1 class="text-center mb-4">Leaderboard</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <div class="btn-group mb-4 d-flex justify-content-center" role="group" aria-label="Time filter">
+                <button type="button" class="btn btn-primary active">This Week</button>
+                <button type="button" class="btn btn-outline-primary">This Month</button>
+                <button type="button" class="btn btn-outline-primary">All Time</button>
+            </div>
 
-    .user {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #eee;
-      padding: 0.75rem 0;
-    }
-
-    .user:last-child {
-      border-bottom: none;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .user-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .user-name {
-      font-weight: bold;
-    }
-
-    .user-points {
-      color: #000;
-      font-size: 1rem;
-    }
-
-    .bottom-nav {
-      background-color: #000;
-      display: flex;
-      justify-content: space-around;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      padding: 0.5rem 0;
-    }
-
-    .bottom-nav a {
-      color: #fff;
-      text-decoration: none;
-      text-align: center;
-      font-size: 0.75rem;
-    }
-
-    .bottom-nav div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 1.25rem;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h2>🏆 Leaderboard</h2>
-  </header>
-
-  <div class="leaderboard-container">
-    <div class="user">
-      <div class="user-info">
-        <img src="https://i.pravatar.cc/40?img=1" alt="User">
-        <div class="user-name">Jovana</div>
-      </div>
-      <div class="user-points">520 pts</div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width: 10%">Rank</th>
+                            <th style="width: 40%">User</th>
+                            <th style="width: 25%">Points</th>
+                            <th style="width: 25%">Streak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in leaderboard %}
+                        <tr {% if entry.user == request.user %}class="table-active"{% endif %}>
+                            <td class="text-center fw-bold">{{ forloop.counter }}</td>
+                            <td>{{ entry.user.get_full_name }}</td>
+                            <td class="text-primary fw-bold">{{ entry.points }}</td>
+                            <td><span class="badge bg-warning text-dark">{{ entry.streak }} days</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">No entries yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="user">
-      <div class="user-info">
-        <img src="https://i.pravatar.cc/40?img=2" alt="User">
-        <div class="user-name">Marko</div>
-      </div>
-      <div class="user-points">480 pts</div>
-    </div>
-    <div class="user">
-      <div class="user-info">
-        <img src="https://i.pravatar.cc/40?img=3" alt="User">
-        <div class="user-name">Lana</div>
-      </div>
-      <div class="user-points">450 pts</div>
-    </div>
-    <div class="user">
-      <div class="user-info">
-        <img src="https://i.pravatar.cc/40?img=4" alt="User">
-        <div class="user-name">Stefan</div>
-      </div>
-      <div class="user-points">420 pts</div>
-    </div>
-  </div>
-
-  <nav class="bottom-nav">
-    <a href="index.html"><div>🏠<br>Home</div></a>
-    <a href="#"><div>👥<br>Friends</div></a>
-    <a href="leaderboard.html"><div>🏆<br>Leaderboard</div></a>
-    <a href="#"><div>👤<br>Profile</div></a>
-  </nav>
-
-</body>
-</html>
+</div>
+{% endblock %}

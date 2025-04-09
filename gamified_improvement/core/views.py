@@ -4,6 +4,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from .models import Plan
+from .forms import UserProfileForm
 
 @login_required
 def index(request):
@@ -40,8 +41,21 @@ def leaderboard(request):
 def friends(request):
     return render(request, 'core/friends.html')
 
+@login_required
 def profile(request):
-    context = {'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0}
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('core:profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    
+    context = {
+        'form': form,
+        'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0
+    }
     return render(request, 'core/profile.html', context)
 
 def about(request):
@@ -79,3 +93,17 @@ def plan_detail(request, pk):
     }
     return render(request, 'core/plans/detail.html', context)
 
+
+def save_change(request):
+    """
+    Save changes made to the user's profile.
+    Args:
+        request: The HTTP request
+    """
+    if request.method == 'POST':
+        if form.is_valid():
+            
+            messages.success(request, 'Your profile was successfully updated!')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    return redirect('core:profile')

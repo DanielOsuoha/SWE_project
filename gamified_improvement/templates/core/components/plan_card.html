@@ -26,6 +26,17 @@
                                class="btn btn-sm btn-outline-primary">View Plan</a>
                         {% endif %}
                     </div>
+                    {% if show_progress %}
+                        <div class="progress mt-2" style="height: 5px;">
+                            <div class="progress-bar bg-success" 
+                                 role="progressbar" 
+                                 style="width: {{ plan.userplan_set.get.progress }}%"
+                                 aria-valuenow="{{ plan.userplan_set.get.progress }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

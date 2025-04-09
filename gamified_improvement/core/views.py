@@ -3,45 +3,34 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-from .models import Plan
+from .models import Plan, UserPlan
 from .forms import UserProfileForm
 
 @login_required
 def index(request):
-    categories = [
-        {'name': 'All', 'slug': 'all', 'icon': '🎯'},
-        {'name': 'Fitness', 'slug': 'fitness', 'icon': '💪'},
-        {'name': 'Health', 'slug': 'health', 'icon': '❤️'},
-        {'name': 'Personal', 'slug': 'personal', 'icon': '🎯'},
-        {'name': 'Career', 'slug': 'career', 'icon': '💼'},
-        {'name': 'Financial', 'slug': 'financial', 'icon': '💰'},
-    ]
+    # Get category filter
+    category = request.GET.get('category')
     
-    active_category = request.GET.get('category', 'all')
-    view_type = request.GET.get('view', 'discover')  # Default to discover view
-    
-
+    # Base querysets
     all_plans = Plan.objects.all()
-    my_plans = Plan.objects.filter(userplan__user=request.user, userplan__is_active=True)
+    if category:
+        all_plans = all_plans.filter(category=category)
+        
+    # Get user's plans
+    my_plans = Plan.objects.filter(
+        userplan__user=request.user
+    ).order_by('-userplan__started_at')
     
-    discover_plans = all_plans.exclude(id__in=my_plans.values_list('id', flat=True))
-    
-    # Apply category filter if needed
-    if active_category and active_category != 'all':
-        my_plans = my_plans.filter(category=active_category)
-        discover_plans = discover_plans.filter(category=active_category)
-    
-    # Order plans
-    my_plans = my_plans.order_by('-rating', 'title')
-    discover_plans = discover_plans.order_by('-rating', 'title')
+    # Get plans to discover (excluding user's plans)
+    discover_plans = all_plans.exclude(
+        id__in=my_plans.values_list('id', flat=True)
+    ).order_by('-rating')
     
     context = {
-        'categories': categories,
         'my_plans': my_plans,
         'discover_plans': discover_plans,
-        'active_category': active_category,
-        'view_type': view_type,
-        'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0,
+        'active_category': category,
+        'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0
     }
     return render(request, 'core/index.html', context)
 
@@ -122,8 +111,16 @@ def save_change(request):
 @login_required
 def start_plan(request, pk):
     plan = get_object_or_404(Plan, pk=pk)
-    # Add logic here to start the plan for the user
-    plan.my_plan = True
-    plan.save()
-    messages.success(request, f'You have successfully started "{plan.title}"!')
-    return redirect('core:plan_detail', pk=pk)
+    
+    # Check if user already has this plan
+    user_plan, created = UserPlan.objects.get_or_create(
+        user=request.user,
+        plan=plan
+    )
+    
+    if created:
+        messages.success(request, f'You have successfully started "{plan.title}"!')
+    else:
+        messages.info(request, f'You are already working on "{plan.title}".')
+    
+    return redirect('core:index')

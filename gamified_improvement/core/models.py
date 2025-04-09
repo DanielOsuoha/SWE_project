@@ -38,8 +38,9 @@ class Plan(models.Model):
 class UserPlan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    added_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+    progress = models.IntegerField(default=0)
 
     class Meta:
         unique_together = ('user', 'plan')

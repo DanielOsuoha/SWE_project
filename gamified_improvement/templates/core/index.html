@@ -71,26 +71,32 @@
     </ul>
 
     {% if view_type == 'my_plans' %}
-        {% if my_plans %}
+        <div class="container mb-4">
+            <h2 class="mb-4">My Plans</h2>
+            {% if my_plans %}
+                <div class="row g-4">
+                    {% for plan in my_plans %}
+                        {% include 'core/components/plan_card.html' with plan=plan show_progress=True %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list empty-state-icon"></i>
+                        <h4 class="text-muted">No active plans yet</h4>
+                        <p class="mb-4">Start a plan from the recommendations below!</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="container mb-4">
+            <h2 class="mb-4 mt-5">Discover Plans</h2>
             <div class="row g-4">
-                {% for plan in my_plans %}
+                {% for plan in discover_plans %}
                     {% include 'core/components/plan_card.html' with plan=plan %}
                 {% endfor %}
             </div>
-        {% else %}
-            <div class="text-center py-5">
-                <h4 class="text-muted">You haven't added any plans yet</h4>
-                <p class="mb-4">Discover and add plans to get started!</p>
-                <a href="?view=discover" class="btn btn-primary">
-                    <i class="fas fa-compass me-2"></i>Explore Plans
-                </a>
-            </div>
-        {% endif %}
-    {% else %}
-        <div class="row g-4">
-            {% for plan in discover_plans %}
-                {% include 'core/components/plan_card.html' with plan=plan %}
-            {% endfor %}
         </div>
     {% endif %}
 </div>

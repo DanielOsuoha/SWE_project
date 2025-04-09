@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gameprove</title>
+    <title>GrowQuest: {% block title %}{% endblock %}</title>
     {% load static %}
 </head>
 <body>
     <header>
-        <!-- Navigation and site header content goes here -->
         <nav>
-            <!-- Navigation items -->
+            <ul>
+                <li><a href="{% url 'core:home' %}">Home</a></li>
+                <li><a href="{% url 'core:goals' %}">Daily Goals</a></li>
+                <li><a href="{% url 'core:plans' %}">Plans</a></li>
+                <li><a href="{% url 'core:about' %}">About</a></li>
+                <li><a href="{% url 'core:contact' %}">Contact</a></li>
+            </ul>
         </nav>
     </header>
 

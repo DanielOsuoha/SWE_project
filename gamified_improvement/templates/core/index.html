@@ -4,18 +4,20 @@
 {% block title %}Goal Planner{% endblock %}
 
 {% block content %}
-<div class="container-fluid bg-dark text-white py-4 mb-4">
+<div class="container-fluid welcome-header py-4 mb-4">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-auto">
-                <img src="{% static 'images/default_profile.png' %}" alt="{{ user.get_full_name }}" 
-                     class="rounded-circle" style="width: 75px; height: 75px;">
+                <img src="{% static 'images/default_profile.png' %}" 
+                     alt="{{ user.get_full_name }}" 
+                     class="rounded-circle profile-image"
+                     style="width: 75px; height: 75px; object-fit: cover;">
             </div>
             <div class="col">
                 <h3 class="mb-0 welcome-name">Welcome, {{ user.first_name|default:user.username }}</h3>
             </div>
             <div class="col-auto">
-                <span class="badge bg-warning">
+                <span class="badge bg-warning px-3 py-2" style="font-size: 1rem;">
                     🔥 Streak: {{ streak }}
                 </span>
             </div>
@@ -23,13 +25,19 @@
     </div>
 </div>
 
-<form method="get" class="container mb-4">
-    <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Search plans..." 
-               value="{{ request.GET.search|default:'' }}">
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
-    </div>
-</form>
+<div class="container search-container mb-4">
+    <form method="get">
+        <div class="input-group">
+            <input type="search" name="search" 
+                   class="form-control search-input" 
+                   placeholder="Search plans..." 
+                   value="{{ request.GET.search|default:'' }}">
+            <button class="btn btn-dark search-button" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
 <div class="container mb-4">
     <h4 class="mb-3">Goal Categories</h4>

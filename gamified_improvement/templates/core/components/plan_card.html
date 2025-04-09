@@ -1,17 +1,17 @@
-<div class="col-md-6 col-lg-4 plan-group" data-category="{{ plan.category }}">
+<div class="col-md-6 plan-group" data-category="{{ plan.category }}">
     <div class="card h-100 shadow-sm plan-card">
         <div class="row g-0">
-            <div class="col-4">
+            <div class="col-3">
                 <div class="plan-icon-wrapper">
                     <span class="plan-icon">{{ plan.icon }}</span>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <div class="card-body">
                     <h5 class="card-title text-truncate" title="{{ plan.title }}">{{ plan.title }}</h5>
-                    <div class="mb-2">
+                    <div class="badges-container d-flex gap-2 mb-2">
                         <span class="badge bg-{{ plan.difficulty }}">{{ plan.get_difficulty_display }}</span>
-                        <span class="badge bg-secondary ms-1">{{ plan.get_category_display }}</span>
+                        <span class="badge bg-secondary">{{ plan.get_category_display }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="rating">

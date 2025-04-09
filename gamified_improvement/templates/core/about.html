@@ -1,0 +1,97 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1>About GrowQuest</h1>
+            <p class="hero-text">Making personal growth engaging and effective through gamification</p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="content-wrapper">
+            <h2>Our Mission</h2>
+            <div class="mission-content">
+                <div class="mission-text">
+                    <p>We believe in making self-improvement accessible, enjoyable, and sustainable. Through gamification and personalized experiences, we help you build lasting habits and achieve your goals.</p>
+                </div>
+                <div class="mission-image">
+                    <!-- Image placeholder -->
+                    <img src="{% static 'images/mission.jpg' %}" alt="Mission visualization" class="about-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="content-wrapper">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Icon placeholder -->
+                    </div>
+                    <h3>Goal Tracking</h3>
+                    <p>Set and track your personal development goals with our intuitive system</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Icon placeholder -->
+                    </div>
+                    <h3>Gamified Progress</h3>
+                    <p>Earn points and rewards as you progress on your journey</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Icon placeholder -->
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Connect with like-minded individuals on similar improvement paths</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="content-wrapper">
+            <h2>Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <!-- Team member photo placeholder -->
+                        <img src="{% static 'images/team/member1.jpg' %}" alt="Team member" class="team-img">
+                    </div>
+                    <h3>John Doe</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <!-- Add more team members as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="content-wrapper">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <p>Email: contact@growquest.com</p>
+                <p>Follow us on social media:</p>
+                <div class="social-links">
+                    <!-- Social media links -->
+                    <a href="#" class="social-icon">LinkedIn</a>
+                    <a href="#" class="social-icon">Twitter</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

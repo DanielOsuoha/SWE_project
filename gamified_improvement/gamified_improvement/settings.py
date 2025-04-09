@@ -54,7 +54,7 @@ ROOT_URLCONF = 'gamified_improvement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +68,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gamified_improvement.wsgi.application'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

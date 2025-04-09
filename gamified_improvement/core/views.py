@@ -19,7 +19,7 @@ def index(request):
     
     # Get all plans, ordered by rating
     plans = Plan.objects.all().order_by('-rating', 'title')
-    
+    print(plans) 
     context = {
         'categories': categories,
         'plans': plans,
@@ -27,8 +27,6 @@ def index(request):
     }
     return render(request, 'core/index.html', context)
 
-def home(request):
-    return render(request, 'core/index.html')
 
 def leaderboard(request):
     return render(request, 'core/leaderboard.html')
@@ -59,17 +57,18 @@ def change_password(request):
     })
 
 @login_required
-def plan_list(request):
-    plans = Plan.objects.all()
-    context = {
-        'plans': plans,
-    }
-    return render(request, 'core/plans/list.html', context)
-
-@login_required
 def plan_detail(request, pk):
+    """
+    Display detailed information about a specific plan.
+    Args:
+        request: The HTTP request
+        pk: The primary key of the Plan
+    """
     plan = get_object_or_404(Plan, pk=pk)
+    
     context = {
         'plan': plan,
+        'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0,
     }
     return render(request, 'core/plans/detail.html', context)
+

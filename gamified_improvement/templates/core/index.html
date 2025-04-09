@@ -12,7 +12,7 @@
                      class="rounded-circle" style="width: 75px; height: 75px;">
             </div>
             <div class="col">
-                <h3 class="mb-0">Welcome, {{ user.get_full_name|default:user.username }}</h3>
+                <h3 class="mb-0">Welcome, {{ user.get_full_name|default:user.username|upper }}</h3>
             </div>
             <div class="col-auto">
                 <span class="badge bg-warning">
@@ -44,56 +44,44 @@
 </div>
 
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Available Plans</h4>
-        <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                Sort by
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="?sort=rating">Highest Rated</a></li>
-                <li><a class="dropdown-item" href="?sort=newest">Newest</a></li>
-                <li><a class="dropdown-item" href="?sort=difficulty">Difficulty</a></li>
-            </ul>
-        </div>
-    </div>
-    
-    <div class="row g-4">
-        {% for plan in plans %}
-        <div class="col-md-6 col-lg-4 plan-group" data-category="{{ plan.category }}">
-            <div class="card h-100 shadow-sm">
-                <div class="row g-0">
-                    <div class="col-4">
-                        <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-                            <span style="font-size: 2.5rem;">{{ plan.get_icon }}</span>
+    <h4 class="mb-3">Available Plans</h4>
+    {% if plans %}
+        <div class="row g-4">
+            {% for plan in plans %}
+            <div class="col-md-6 col-lg-4 plan-group" data-category="{{ plan.category }}">
+                <div class="card h-100 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                                <span style="font-size: 2.5rem;">{{ plan.get_icon }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ plan.title }}</h5>
-                            <p class="card-text">
-                                <span class="badge bg-{{ plan.difficulty }}">
-                                    {{ plan.get_difficulty_display }}
-                                </span>
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="text-warning">⭐ {{ plan.rating }}</div>
-                                <a href="{% url 'core:plan_detail' plan.id %}" 
-                                   class="btn btn-sm btn-outline-primary">View Plan</a>
+                        <div class="col-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ plan.title }}</h5>
+                                <p class="card-text">
+                                    <span class="badge bg-{{ plan.difficulty }}">
+                                        {{ plan.get_difficulty_display }}
+                                    </span>
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-warning">⭐ {{ plan.rating }}</div>
+                                    {% comment %} <a href="{% url 'core:plan_detail' plan.id %}" 
+                                       class="btn btn-sm btn-outline-primary">View Plan
+                                    </a> {% endcomment %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <div class="col-12">
-            <div class="alert alert-info text-center">
-                No plans available at the moment.
-            </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            No plans available yet. {{ plans|length }}
         </div>
-        {% endfor %}
-    </div>
+    {% endif %}
 </div>
 {% endblock %}
 

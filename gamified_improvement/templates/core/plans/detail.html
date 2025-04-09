@@ -1,0 +1,53 @@
+{% extends "../../base.html" %}
+{% load static %}
+
+{% block title %}{{ plan.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'core:index' %}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active">{{ plan.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="display-4 me-3">{{ plan.icon }}</span>
+                        <div>
+                            <h1 class="h2 mb-1">{{ plan.title }}</h1>
+                            <div>
+                                <span class="badge bg-{{ plan.difficulty }}">{{ plan.get_difficulty_display }}</span>
+                                <span class="text-warning ms-2">
+                                    {% for _ in "x"|rjust:plan.rating %}⭐{% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="lead mb-4">{{ plan.description }}</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center p-3 border rounded">
+                                <span class="h5 mb-0 me-2">📚</span>
+                                <div>
+                                    <div class="small text-muted">Category</div>
+                                    <div class="fw-bold">{{ plan.get_category_display }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center p-3 border rounded">
+                                <span class="h5 mb-0 me-2">🎯</span>
+                                <div>
+                                    <div class="small text-muted">Difficulty</div>
+                                    <div class="fw-bold">{{ plan.get_difficulty_display }}</div>
+                                </div>
+                            

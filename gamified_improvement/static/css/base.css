@@ -21,18 +21,25 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--secondary-color);
+    padding-top: var(--header-height); /* Add padding to offset fixed header */
 }
 
 /* Header and Navigation */
 header {
     background: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: fixed;
+    position: fixed; /* Uncomment and keep fixed */
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     height: var(--header-height);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto; /* Changed from 15px to provide better spacing */
+    padding: 0 1rem;
 }
 
 nav {
@@ -153,4 +160,9 @@ footer {
 .alert-error {
     background-color: var(--error-color);
     color: white;
+}
+
+/* Content specific margins */
+#hero {
+    margin-top: 2rem; /* Add space after header */
 }

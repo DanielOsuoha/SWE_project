@@ -13,15 +13,16 @@
             <ul>
                 <li><a href="{% url 'core:home' %}">Home</a></li>
                 <li><a href="{% url 'core:leaderboard' %}">Leaderboard</a></li>
-                <li><a href="{% url 'core:friends' %}">Friends</a></li>
                 <li><a href="{% url 'core:about' %}">About</a></li>
                 <li><a href="{% url 'core:profile' %}">Profile</a></li>
+                <li><a href="{% url 'core:friends' %}">Friends</a></li>
             </ul>
         </nav>
     </header>
-
-    {% block content %}
-    {% endblock %}
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 
     <footer>
         <p>&copy; 2025 GrowQuest. All rights reserved.</p>

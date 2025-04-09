@@ -6,7 +6,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-5">
     <!-- Hero Section -->
     <section id="hero" class="section">
         <h1>Welcome to GrowQuest</h1>
@@ -39,24 +39,96 @@
 
     <!-- Plans Section -->
     <section id="plans" class="section">
-        <h2>Active Plans</h2>
-        <div class="plans-container">
-            <!-- Sample plans (will be dynamic later) -->
-            <div class="plan-card">
-                <h3>Fitness Journey</h3>
-                <p>Level 2 - Week 3</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 60%"></div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Active Plans</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#explorePlansModal">
+                <i class="fas fa-compass me-2"></i>Explore Plans
+            </button>
+        </div>
+
+        <!-- Active Plans -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Fitness Journey</h5>
+                        <p class="text-muted">Level 2 - Week 3</p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 60%" 
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm">Continue</button>
+                    </div>
                 </div>
             </div>
-            <div class="plan-card">
-                <h3>Coding Challenge</h3>
-                <p>Level 1 - Week 1</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 30%"></div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Coding Challenge</h5>
+                        <p class="text-muted">Level 1 - Week 1</p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 30%" 
+                                 aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm">Continue</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+</div>
+
+<!-- Explore Plans Modal -->
+<div class="modal fade" id="explorePlansModal" tabindex="-1" aria-labelledby="explorePlansModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="explorePlansModalLabel">Explore Plans</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Search and Filter -->
+                <div class="mb-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search plans...">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" 
+                                data-bs-toggle="dropdown">Filter</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Fitness</a></li>
+                            <li><a class="dropdown-item" href="#">Learning</a></li>
+                            <li><a class="dropdown-item" href="#">Productivity</a></li>
+                            <li><a class="dropdown-item" href="#">Wellness</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Available Plans Grid -->
+                <div class="row g-4">
+                    {% for plan in available_plans %}
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ plan.title }}</h5>
+                                <p class="card-text">{{ plan.description }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary">{{ plan.category }}</span>
+                                    <button class="btn btn-primary btn-sm">Start Plan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No plans available at the moment.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

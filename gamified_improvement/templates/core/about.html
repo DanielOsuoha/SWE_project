@@ -40,21 +40,21 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <!-- Icon placeholder -->
+                        <i class="fas fa-bullseye fa-2x"></i>
                     </div>
                     <h3>Goal Tracking</h3>
                     <p>Set and track your personal development goals with our intuitive system</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <!-- Icon placeholder -->
+                        <i class="fas fa-trophy fa-2x"></i>
                     </div>
                     <h3>Gamified Progress</h3>
                     <p>Earn points and rewards as you progress on your journey</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <!-- Icon placeholder -->
+                        <i class="fas fa-users fa-2x"></i>
                     </div>
                     <h3>Community Support</h3>
                     <p>Connect with like-minded individuals on similar improvement paths</p>
@@ -69,14 +69,44 @@
             <h2>Our Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-image">
-                        <!-- Team member photo placeholder -->
-                        <img src="{% static 'images/team/member1.jpg' %}" alt="Team member" class="team-img">
+                    <div class="member-info">
+                        <h3>Jovana Latinovic</h3>
+                        <span class="badge bg-primary">Project Manager</span>
+                        <p class="member-description">Leading the project vision and team coordination.</p>
                     </div>
-                    <h3>John Doe</h3>
-                    <p>Founder & CEO</p>
                 </div>
-                <!-- Add more team members as needed -->
+
+                <div class="team-member">
+                    <div class="member-info">
+                        <h3>Destiny Wesley</h3>
+                        <span class="badge bg-success">UX Designer</span>
+                        <p class="member-description">Creating intuitive and engaging user experiences.</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-info">
+                        <h3>Adetayo Kalejaiye</h3>
+                        <span class="badge bg-info">Developer</span>
+                        <p class="member-description">Full-stack development and feature implementation.</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-info">
+                        <h3>Corian McGowan</h3>
+                        <span class="badge bg-info">Developer</span>
+                        <p class="member-description">Backend architecture and system design.</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-info">
+                        <h3>Daniel Osuoha</h3>
+                        <span class="badge bg-info">Developer</span>
+                        <p class="member-description">Frontend development and UI implementation.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -89,10 +119,15 @@
                 <p>Email: contact@growquest.com</p>
                 <p>Follow us on social media:</p>
                 <div class="social-links">
-                    <!-- Social media links -->
-                    <a href="#" class="social-icon">LinkedIn</a>
-                    <a href="#" class="social-icon">Twitter</a>
-                    <a href="#" class="social-icon">Instagram</a>
+                    <a href="#" class="social-icon">
+                        <img src="{% static 'images/social/linkedin.png' %}" alt="LinkedIn" width="32" height="32">
+                    </a>
+                    <a href="#" class="social-icon">
+                        <img src="{% static 'images/social/instagram.png' %}" alt="Instagram" width="32" height="32">
+                    </a>
+                    <a href="#" class="social-icon">
+                        <img src="{% static 'images/social/github.png' %}" alt="GitHub" width="32" height="32">
+                    </a>
                 </div>
             </div>
         </div>

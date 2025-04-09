@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Plan(models.Model):
     DIFFICULTY_CHOICES = [
@@ -22,6 +23,7 @@ class Plan(models.Model):
     description = models.TextField()
     icon = models.CharField(max_length=10, default='🎯')
     rating = models.IntegerField(default=5)
+    users = models.ManyToManyField(User, through='UserPlan', related_name='plans')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -32,3 +34,12 @@ class Plan(models.Model):
 
     def get_icon(self):
         return dict(self.CATEGORY_CHOICES).get(self.category, '🎯').split()[0]
+
+class UserPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('user', 'plan')

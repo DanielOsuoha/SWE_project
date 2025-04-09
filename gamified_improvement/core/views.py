@@ -17,20 +17,30 @@ def index(request):
         {'name': 'Financial', 'slug': 'financial', 'icon': '💰'},
     ]
     
-    # Get category filter from URL parameters
     active_category = request.GET.get('category', 'all')
+    view_type = request.GET.get('view', 'discover')  # Default to discover view
     
-    plans = Plan.objects.all()
 
-    if active_category and active_category != 'all':
-        plans = plans.filter(category=active_category)
+    all_plans = Plan.objects.all()
+    my_plans = Plan.objects.filter(userplan__user=request.user, userplan__is_active=True)
     
-    plans = plans.order_by('-rating', 'title')
+    discover_plans = all_plans.exclude(id__in=my_plans.values_list('id', flat=True))
+    
+    # Apply category filter if needed
+    if active_category and active_category != 'all':
+        my_plans = my_plans.filter(category=active_category)
+        discover_plans = discover_plans.filter(category=active_category)
+    
+    # Order plans
+    my_plans = my_plans.order_by('-rating', 'title')
+    discover_plans = discover_plans.order_by('-rating', 'title')
     
     context = {
         'categories': categories,
-        'plans': plans,
+        'my_plans': my_plans,
+        'discover_plans': discover_plans,
         'active_category': active_category,
+        'view_type': view_type,
         'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0,
     }
     return render(request, 'core/index.html', context)
@@ -108,3 +118,12 @@ def save_change(request):
         else:
             messages.error(request, 'Please correct the error below.')
     return redirect('core:profile')
+
+@login_required
+def start_plan(request, pk):
+    plan = get_object_or_404(Plan, pk=pk)
+    # Add logic here to start the plan for the user
+    plan.my_plan = True
+    plan.save()
+    messages.success(request, f'You have successfully started "{plan.title}"!')
+    return redirect('core:plan_detail', pk=pk)

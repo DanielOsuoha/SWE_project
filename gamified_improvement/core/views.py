@@ -1,9 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
-def index(request):
+def home(request):
     return render(request, 'core/index.html')
-def about(request):
-    return render(request, 'core/about.html')
-def contact(request):
-    return render(request, 'core/contact.html')
+
+def leaderboard(request):
+    return render(request, 'core/leaderboard.html')
+
+def friends(request):
+    return render(request, 'core/friends.html')
+
+def profile(request):
+    return render(request, 'core/profile.html')

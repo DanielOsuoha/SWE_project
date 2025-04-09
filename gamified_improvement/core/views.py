@@ -8,28 +8,41 @@ from .forms import UserProfileForm
 
 @login_required
 def index(request):
-    # Get category filter
-    category = request.GET.get('category')
+    # Define available categories
+    categories = [
+        {'slug': 'fitness', 'name': 'Fitness', 'icon': '💪'},
+        {'slug': 'health', 'name': 'Health', 'icon': '🏥'},
+        {'slug': 'education', 'name': 'Education', 'icon': '📚'},
+        {'slug': 'career', 'name': 'Career', 'icon': '💼'},
+        {'slug': 'mindfulness', 'name': 'Mindfulness', 'icon': '🧘'},
+        {'slug': 'productivity', 'name': 'Productivity', 'icon': '⚡'},
+    ]
     
-    # Base querysets
-    all_plans = Plan.objects.all()
-    if category:
-        all_plans = all_plans.filter(category=category)
-        
-    # Get user's plans
-    my_plans = Plan.objects.filter(
-        userplan__user=request.user
-    ).order_by('-userplan__started_at')
+    view_type = request.GET.get('view', 'discover')
+    active_category = request.GET.get('category')
+    search_query = request.GET.get('search', '')
+
+    # Base queryset
+    plans = Plan.objects.all()
     
-    # Get plans to discover (excluding user's plans)
-    discover_plans = all_plans.exclude(
-        id__in=my_plans.values_list('id', flat=True)
-    ).order_by('-rating')
-    
+    # Apply category filter if selected
+    if active_category and active_category != 'all':
+        plans = plans.filter(category=active_category)
+
+    # Apply search filter if present
+    if search_query:
+        plans = plans.filter(title__icontains=search_query)
+
+    # Split into my plans and discover plans
+    my_plans = plans.filter(userplan__user=request.user)
+    discover_plans = plans.exclude(userplan__user=request.user)
+
     context = {
+        'categories': categories,
+        'active_category': active_category,
+        'view_type': view_type,
         'my_plans': my_plans,
         'discover_plans': discover_plans,
-        'active_category': category,
         'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0
     }
     return render(request, 'core/index.html', context)

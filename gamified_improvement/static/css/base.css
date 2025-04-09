@@ -23,14 +23,14 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--secondary-color);
-    padding-top: var(--header-height); /* Add padding to offset fixed header */
+    padding-top: var(--header-height); 
 }
 
 /* Header and Navigation */
 header {
     background: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: fixed; /* Uncomment and keep fixed */
+    position: fixed; 
     top: 0;
     left: 0;
     right: 0;
@@ -40,7 +40,7 @@ header {
 
 .container {
     max-width: 1200px;
-    margin: 2rem auto; /* Changed from 15px to provide better spacing */
+    margin: 2.5rem auto; 
     padding: 0 1rem;
 }
 
@@ -288,5 +288,72 @@ input[type="checkbox"]:checked::after {
 
 /* Content specific margins */
 #hero {
-    margin-top: 2rem; /* Add space after header */
+    margin-top: 2rem; 
+}
+
+/* Team Section Styles */
+.team-section {
+    padding: 4rem 0;
+    background-color: var(--secondary-color);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.team-member {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.member-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.member-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.member-info h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.member-description {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .member-image {
+        height: 200px;
+    }
 }

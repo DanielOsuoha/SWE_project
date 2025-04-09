@@ -6,74 +6,69 @@
 {% block content %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Profile Settings</h2>
-                    
-                    <!-- Account Info Section -->
-                    <div class="mb-4">
-                        <h5 class="text-muted mb-3">Account Information</h5>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control bg-light" id="name" 
-                                           value="{{ user.get_full_name }}" readonly disabled>
-                                    <label for="name">Full Name</label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control bg-light" id="email" 
-                                           value="{{ user.email }}" readonly disabled>
-                                    <label for="email">Email Address</label>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control bg-light" id="username" 
-                                           value="{{ user.username }}" readonly disabled>
-                                    <label for="username">Username</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <small class="text-muted">
-                                    To update your account information, please contact support.
-                                </small>
-                            </div>
-                        </div>
+                    <div class="text-center mb-4">
+                        <img src="{% static 'images/default_profile.png' %}" 
+                             alt="Profile Picture" 
+                             class="rounded-circle mb-3"
+                             style="width: 120px; height: 120px; object-fit: cover;">
+                        <h2>{{ user.username }}</h2>
+                        <span class="badge bg-warning">
+                            🔥 Streak: {{ streak }}
+                        </span>
                     </div>
 
-                    <!-- Location Section -->
-                    <form method="post" class="needs-validation" novalidate>
+                    {% if messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+
+                    <form method="post" class="mt-4">
                         {% csrf_token %}
-                        <h5 class="text-muted mb-3">Location (Optional)</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="city" name="city" 
-                                           value="{{ user.profile.city|default:'' }}">
-                                    <label for="city">City</label>
-                                </div>
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" 
+                                       class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
+                                       id="first_name"
+                                       name="first_name"
+                                       value="{{ form.first_name.value|default:'' }}"
+                                       placeholder="Enter your first name">
+                                {% if form.first_name.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.first_name.errors|join:", " }}
+                                    </div>
+                                {% endif %}
                             </div>
-
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="state" name="state" 
-                                           value="{{ user.profile.state|default:'' }}">
-                                    <label for="state">State</label>
-                                </div>
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" 
+                                       class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
+                                       id="last_name"
+                                       name="last_name"
+                                       value="{{ form.last_name.value|default:'' }}"
+                                       placeholder="Enter your last name">
+                                {% if form.last_name.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.last_name.errors|join:", " }}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <a href="{% url 'core:change_password' %}" 
-                               class="btn btn-outline-primary me-md-2">Change Password</a>
+                        <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>Update Location
+                                <i class="fas fa-save me-2"></i>Save Changes
                             </button>
+                            <a href="{% url 'core:change_password' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </a>
                         </div>
                     </form>
                 </div>

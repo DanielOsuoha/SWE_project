@@ -41,7 +41,8 @@ def friends(request):
     return render(request, 'core/friends.html')
 
 def profile(request):
-    return render(request, 'core/profile.html')
+    context = {'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0}
+    return render(request, 'core/profile.html', context)
 
 def about(request):
     return render(request, 'core/about.html')

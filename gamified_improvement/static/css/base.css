@@ -979,3 +979,34 @@ input[type="checkbox"]:checked::after {
 .btn-primary:hover .fas {
     transform: translateX(2px);
 }
+
+/* Friends Page Styles */
+.friend-item {
+    transition: background-color 0.3s ease;
+}
+
+.friend-item:hover {
+    background-color: var(--bs-light);
+}
+
+.friend-item:last-child {
+    border-bottom: none !important;
+}
+
+.suggestion-item {
+    background-color: var(--bs-light);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.suggestion-item:hover {
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    transform: translateY(-1px);
+}

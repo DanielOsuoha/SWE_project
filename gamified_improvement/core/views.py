@@ -21,6 +21,7 @@ def index(request):
     active_category = request.GET.get('category', 'all')
     
     plans = Plan.objects.all()
+
     if active_category and active_category != 'all':
         plans = plans.filter(category=active_category)
     

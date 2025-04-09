@@ -359,6 +359,47 @@ input[type="checkbox"]:checked::after {
     line-height: 1.6;
 }
 
+.contact-section {
+    padding: 4rem 0;
+    background-color: var(--secondary-color);
+}
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+.social-img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+}
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 30%;
+    background-color: white;
+    padding: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
 /* Leaderboard Filters */
 .leaderboard-filters {
     display: flex;

@@ -1,9 +1,6 @@
 {% extends "../base.html" %}
 {% load static %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
-{% endblock %}
 
 {% block title %}About{% endblock %}
 
@@ -114,19 +111,19 @@
     <!-- Contact Section -->
     <section class="contact-section">
         <div class="content-wrapper">
-            <h2>Get in Touch</h2>
-            <div class="contact-info">
-                <p>Email: contact@growquest.com</p>
-                <p>Follow us on social media:</p>
+            <h2 class="text-center mb-4">Get in Touch</h2>
+            <div class="contact-info text-center">
+                <p class="mb-3">Email: contact@growquest.com</p>
+                <p class="mb-4">Follow us on social media:</p>
                 <div class="social-links">
                     <a href="#" class="social-icon">
-                        <img src="{% static 'images/social/linkedin.png' %}" alt="LinkedIn" width="32" height="32">
+                        <img src="{% static 'images/social/linkedin.png' %}" alt="LinkedIn" class="social-img">
                     </a>
                     <a href="#" class="social-icon">
-                        <img src="{% static 'images/social/instagram.png' %}" alt="Instagram" width="32" height="32">
+                        <img src="{% static 'images/social/instagram.png' %}" alt="Instagram" class="social-img">
                     </a>
                     <a href="#" class="social-icon">
-                        <img src="{% static 'images/social/github.png' %}" alt="GitHub" width="32" height="32">
+                        <img src="{% static 'images/social/github.png' %}" alt="GitHub" class="social-img">
                     </a>
                 </div>
             </div>

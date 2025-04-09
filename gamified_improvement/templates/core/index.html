@@ -9,13 +9,13 @@
         <div class="row align-items-center">
             <div class="col-auto">
                 <img src="{% static 'images/default-profile.png' %}" alt="{{ user.get_full_name }}" 
-                     class="rounded-circle" style="width: 64px; height: 64px;">
+                     class="rounded-circle" style="width: 75px; height: 75px;">
             </div>
             <div class="col">
                 <h3 class="mb-0">Welcome, {{ user.get_full_name|default:user.username }}</h3>
             </div>
             <div class="col-auto">
-                <span class="badge bg-warning">🔥 Streak: 3</span>
+                <span class="badge bg-warning">🔥 Streak: 5</span>
             </div>
         </div>
     </div>

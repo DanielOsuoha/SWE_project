@@ -1,134 +1,326 @@
-{% extends "../base.html" %}
-{% load static %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock %}
-{% block title %}Home{% endblock %}
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goal Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-{% block content %}
-<div class="container py-5">
-    <!-- Hero Section -->
-    <section id="hero" class="section">
-        <h1>Welcome to GrowQuest</h1>
-        <p>Level up your life through daily achievements</p>
-    </section>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f0f0;
+    }
 
-    <!-- Goals Section -->
-    <section id="goals" class="section">
-        <h2>Today's Goals</h2>
-        <div class="goals-container">
-            <!-- Sample goals (will be dynamic later) -->
-            <div class="goal-item">
-                <input type="checkbox" id="goal1" class="goal-checkbox">
-                <label for="goal1">Complete morning meditation</label>
-            </div>
-            <div class="goal-item">
-                <input type="checkbox" id="goal2" class="goal-checkbox">
-                <label for="goal2">Study for 2 hours</label>
-            </div>
-            <div class="goal-item">
-                <input type="checkbox" id="goal3" class="goal-checkbox">
-                <label for="goal3">30 minutes exercise</label>
-            </div>
-            <div class="goal-item">
-                <input type="checkbox" id="goal4" class="goal-checkbox">
-                <label for="goal4">Read 20 pages</label>
-            </div>
+    header {
+      background-color: #000;
+      padding: 1rem;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+
+    header img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+
+    .streak-icon {
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      font-size: 1.5rem;
+    }
+
+    .search-bar {
+      margin: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 80%;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0 1rem;
+      gap: 1rem;
+    }
+
+    .category-button {
+      background-color: #000;
+      color: #ffd700;
+      width: 100px;
+      height: 100px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .category-button:hover {
+      transform: scale(1.05);
+    }
+
+    .category-button img {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 0.5rem;
+    }
+
+    .plans {
+      padding: 0 1rem;
+    }
+
+    .plan-group {
+      margin-bottom: 2rem;
+    }
+
+    .plan-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .plan-card {
+      background-color: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      display: flex;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .plan-card img {
+      width: 100px;
+      object-fit: cover;
+    }
+
+    .plan-details {
+      padding: 0.5rem 1rem;
+      flex-grow: 1;
+    }
+
+    .plan-title {
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .plan-subtitle {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .plan-rating {
+      color: gold;
+      font-size: 0.85rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+    .bottom-nav {
+      background-color: #000;
+      display: flex;
+      justify-content: space-around;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+
+    .bottom-nav a {
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .bottom-nav div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="streak-icon">🔥</div>
+    <img src="https://github.com/mdo.png" alt="Profile" />
+    <h3>Welcome<br>John Doe</h3>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search plans..." />
+  </div>
+
+  <div class="section-title">Goal Categories</div>
+  <div class="categories">
+    <button class="category-button" data-category="all"><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png">All</button>
+    <button class="category-button" data-category="fitness"><img src="https://cdn-icons-png.flaticon.com/512/1161/1161388.png">Fitness</button>
+    <button class="category-button" data-category="health"><img src="https://cdn-icons-png.flaticon.com/512/1047/1047735.png">Health</button>
+    <button class="category-button" data-category="personal"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946433.png">Personal</button>
+    <button class="category-button" data-category="career"><img src="https://cdn-icons-png.flaticon.com/512/2541/2541976.png">Career</button>
+    <button class="category-button" data-category="financial"><img src="https://cdn-icons-png.flaticon.com/512/2933/2933887.png">Financial</button>
+    <button class="category-button" data-category="spiritual"><img src="https://cdn-icons-png.flaticon.com/512/3448/3448535.png">Spiritual</button>
+  </div>
+
+  <div class="section-title">Featured Plans</div>
+  <div class="plans">
+    <!-- FITNESS -->
+    <div class="plan-group" data-category="fitness">
+      <a href="hiit-blast.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">HIIT Blast</p>
+            <p class="plan-subtitle">Intermediate</p>
+            <p class="plan-rating">⭐ 4.8</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Plans Section -->
-    <section id="plans" class="section">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Active Plans</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#explorePlansModal">
-                <i class="fas fa-compass me-2"></i>Explore Plans
-            </button>
-        </div>
-
-        <!-- Active Plans -->
-        <div class="row g-4 mb-5">
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Fitness Journey</h5>
-                        <p class="text-muted">Level 2 - Week 3</p>
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 60%" 
-                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                        <button class="btn btn-outline-primary btn-sm">Continue</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Coding Challenge</h5>
-                        <p class="text-muted">Level 1 - Week 1</p>
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 30%" 
-                                 aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
-                        </div>
-                        <button class="btn btn-outline-primary btn-sm">Continue</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
-
-<!-- Explore Plans Modal -->
-<div class="modal fade" id="explorePlansModal" tabindex="-1" aria-labelledby="explorePlansModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="explorePlansModalLabel">Explore Plans</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Search and Filter -->
-                <div class="mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search plans...">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" 
-                                data-bs-toggle="dropdown">Filter</button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Fitness</a></li>
-                            <li><a class="dropdown-item" href="#">Learning</a></li>
-                            <li><a class="dropdown-item" href="#">Productivity</a></li>
-                            <li><a class="dropdown-item" href="#">Wellness</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Available Plans Grid -->
-                <div class="row g-4">
-                    {% for plan in available_plans %}
-                    <div class="col-md-6">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ plan.title }}</h5>
-                                <p class="card-text">{{ plan.description }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-primary">{{ plan.category }}</span>
-                                    <button class="btn btn-primary btn-sm">Start Plan</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No plans available at the moment.</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+      </a>
     </div>
-</div>
-{% endblock %}
+    <div class="plan-group" data-category="fitness">
+      <a href="plan.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Weight Training</p>
+            <p class="plan-subtitle">Advanced</p>
+            <p class="plan-rating">⭐ 5.0</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- HEALTH -->
+    <div class="plan-group" data-category="health">
+      <a href="vegan-start.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/4397907/pexels-photo-4397907.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" />
+          <div class="plan-details">
+            <p class="plan-title">Vegan Start</p>
+            <p class="plan-subtitle">Beginner</p>
+            <p class="plan-rating">⭐ 4.7</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="plan-group" data-category="health">
+      <a href="plan.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/4050428/pexels-photo-4050428.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Mindful Eating</p>
+            <p class="plan-subtitle">All Levels</p>
+            <p class="plan-rating">⭐ 4.8</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- PERSONAL -->
+    <div class="plan-group" data-category="personal">
+      <a href="plan.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/1812964/pexels-photo-1812964.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Gratitude Habit</p>
+            <p class="plan-subtitle">Happiness</p>
+            <p class="plan-rating">⭐ 4.9</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- CAREER -->
+    <div class="plan-group" data-category="career">
+      <a href="portfolio-builder.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/1181356/pexels-photo-1181356.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Portfolio Builder</p>
+            <p class="plan-subtitle">Showcase Skills</p>
+            <p class="plan-rating">⭐ 5.0</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- FINANCIAL -->
+    <div class="plan-group" data-category="financial">
+      <a href="save-1000.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Save $1000</p>
+            <p class="plan-subtitle">Budgeting</p>
+            <p class="plan-rating">⭐ 4.8</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- SPIRITUAL -->
+    <div class="plan-group" data-category="spiritual">
+      <a href="plan.html" class="plan-link">
+        <div class="plan-card">
+          <img src="https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg" />
+          <div class="plan-details">
+            <p class="plan-title">Read Scripture</p>
+            <p class="plan-subtitle">Faith</p>
+            <p class="plan-rating">⭐ 4.8</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <nav class="bottom-nav">
+    <a href="#"><div>🏠<br>Home</div></a>
+    <a href="#"><div>👥<br>Friends</div></a>
+    <a href="leaderboard.html"><div>🏆<br>Leaderboard</div></a>
+    <a href="#"><div>👤<br>Profile</div></a>
+  </nav>
+
+  <script>
+    const buttons = document.querySelectorAll(".category-button");
+    const planGroups = document.querySelectorAll(".plan-group");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const category = button.getAttribute("data-category");
+        planGroups.forEach(group => {
+          const match = category === "all" || group.getAttribute("data-category") === category;
+          group.style.display = match ? "block" : "none";
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

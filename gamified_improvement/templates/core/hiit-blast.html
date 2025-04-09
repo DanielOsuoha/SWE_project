@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HIIT Blast</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    .back {
+      display: inline-block;
+      margin: 1rem;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 0.9rem;
+    }
+
+    .header {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .banner {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .container {
+      padding: 1rem;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 1rem;
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    .progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress span {
+      font-size: 0.95rem;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #000;
+      color: #fff;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: #222;
+    }
+
+    .checklist ul {
+      padding-left: 1.2rem;
+    }
+
+    .checklist li {
+      margin-bottom: 0.5rem;
+    }
+    .bottom-nav {
+      background-color: #000;
+      display: flex;
+      justify-content: space-around;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+
+    .bottom-nav a {
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .bottom-nav div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back">← Back to Plans</a>
+
+  <div class="container">
+    <img class="banner" src="https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg" alt="HIIT Blast" />
+
+    <div class="header">
+      <h1>HIIT Blast</h1>
+      <p class="subtitle">Category: Fitness • Level: Intermediate</p>
+    </div>
+
+    <div class="description">
+      HIIT Blast is a 21-day high-intensity interval training plan designed to help you shred fat, build stamina, and boost cardiovascular health. Quick daily workouts under 30 minutes. No gym required.
+    </div>
+
+    <div class="info-box progress">
+      <div>
+        <h3>🔥 Current Streak</h3>
+        <span>3 days</span>
+      </div>
+      <div>
+        <h3>📆 Plan Length</h3>
+        <span>21 days</span>
+      </div>
+    </div>
+
+    <div class="info-box checklist">
+      <h3>✅ Today’s Checklist</h3>
+      <ul>
+        <li>☑️ 15-min HIIT Circuit</li>
+        <li>☑️ 2-min Plank</li>
+        <li>🔲 Stretch Cooldown</li>
+      </ul>
+    </div>
+
+    <a href="#" class="button">Continue Plan</a>
+  </div>
+  <nav class="bottom-nav">
+    <a href="index.html"><div>🏠<br>Home</div></a>
+    <a href="#"><div>👥<br>Friends</div></a>
+    <a href="leaderboard.html"><div>🏆<br>Leaderboard</div></a>
+    <a href="#"><div>👤<br>Profile</div></a>
+  </nav>
+
+</body>
+</html>

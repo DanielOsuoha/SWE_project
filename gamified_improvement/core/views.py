@@ -7,7 +7,6 @@ from .models import Plan
 
 @login_required
 def index(request):
-    # Predefined categories with icons
     categories = [
         {'name': 'All', 'slug': 'all', 'icon': '🎯'},
         {'name': 'Fitness', 'slug': 'fitness', 'icon': '💪'},
@@ -17,12 +16,20 @@ def index(request):
         {'name': 'Financial', 'slug': 'financial', 'icon': '💰'},
     ]
     
-    # Get all plans, ordered by rating
-    plans = Plan.objects.all().order_by('-rating', 'title')
-    print(plans) 
+    # Get category filter from URL parameters
+    active_category = request.GET.get('category', 'all')
+    
+    # Get all plans and filter if category is specified
+    plans = Plan.objects.all()
+    if active_category and active_category != 'all':
+        plans = plans.filter(category=active_category)
+    
+    plans = plans.order_by('-rating', 'title')
+    
     context = {
         'categories': categories,
         'plans': plans,
+        'active_category': active_category,
         'streak': request.user.profile.streak if hasattr(request.user, 'profile') else 0,
     }
     return render(request, 'core/index.html', context)

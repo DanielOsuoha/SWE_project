@@ -589,3 +589,15 @@ input[type="checkbox"]:checked::after {
 .hidden {
     display: none;
 }
+
+.btn-outline-dark:hover {
+    background-color: #343a40;
+    color: white;
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+}
+
+.btn-dark {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

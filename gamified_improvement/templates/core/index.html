@@ -44,18 +44,32 @@
 </div>
 
 <div class="container">
-    <h4 class="mb-3">Featured Plans</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Available Plans</h4>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Sort by
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="?sort=rating">Highest Rated</a></li>
+                <li><a class="dropdown-item" href="?sort=newest">Newest</a></li>
+                <li><a class="dropdown-item" href="?sort=difficulty">Difficulty</a></li>
+            </ul>
+        </div>
+    </div>
+    
     <div class="row g-4">
         {% for plan in plans %}
         <div class="col-md-6 col-lg-4 plan-group" data-category="{{ plan.category }}">
-            <div class="card h-100">
+            <div class="card h-100 shadow-sm">
                 <div class="row g-0">
                     <div class="col-4">
                         {% if plan.image %}
-                            <img src="{{ plan.image.url }}" class="img-fluid h-100" style="object-fit: cover;" alt="{{ plan.title }}">
+                            <img src="{{ plan.image.url }}" class="img-fluid h-100" 
+                                 style="object-fit: cover;" alt="{{ plan.title }}">
                         {% else %}
                             <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-                                <span class="display-4">{{ plan.icon|default:"🎯" }}</span>
+                                <span style="font-size: 2rem;">{{ plan.icon|default:"🎯" }}</span>
                             </div>
                         {% endif %}
                     </div>
@@ -63,14 +77,26 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ plan.title }}</h5>
                             <p class="card-text">
-                                <span class="badge bg-secondary">{{ plan.difficulty }}</span>
+                                <span class="badge bg-{{ plan.difficulty|lower }}">
+                                    {{ plan.get_difficulty_display }}
+                                </span>
                             </p>
-                            <div class="text-warning">
-                                {% for i in ""|ljust:plan.rating %}⭐{% endfor %}
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="text-warning">
+                                    {% for i in ""|ljust:plan.rating %}⭐{% endfor %}
+                                </div>
+                                <a href="{% url 'core:plan_detail' plan.id %}" 
+                                   class="btn btn-sm btn-outline-primary">View Plan</a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                No plans available at the moment.
             </div>
         </div>
         {% endfor %}
@@ -81,11 +107,16 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll(".category-button");
+    // Category filtering
+    const buttons = document.querySelectorAll("[data-category]");
     const planGroups = document.querySelectorAll(".plan-group");
 
     buttons.forEach(button => {
         button.addEventListener("click", () => {
+            // Remove active class from all buttons
+            buttons.forEach(b => b.classList.remove('btn-dark', 'text-white'));
+            button.classList.add('btn-dark', 'text-white');
+            
             const category = button.getAttribute("data-category");
             planGroups.forEach(group => {
                 if (category === "all" || group.getAttribute("data-category") === category) {
@@ -94,6 +125,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     group.style.display = "none";
                 }
             });
+        });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('input[type="search"]');
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        planGroups.forEach(group => {
+            const title = group.querySelector('.card-title').textContent.toLowerCase();
+            group.style.display = title.includes(searchTerm) ? "block" : "none";
         });
     });
 });

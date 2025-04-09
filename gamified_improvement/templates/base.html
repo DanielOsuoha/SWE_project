@@ -18,6 +18,15 @@
                 <li><a href="{% url 'core:profile' %}">Profile</a></li>
                 <li><a href="{% url 'core:friends' %}">Friends</a></li>
             </ul>
+            <div class="nav-auth">
+                {% if user.is_authenticated %}
+                    <span class="me-3">Welcome, {{ user.get_full_name|default:user.username }}</span>
+                    <a href="{% url 'auth:logout' %}" class="btn btn-outline-primary">Logout</a>
+                {% else %}
+                    <a href="{% url 'auth:login' %}" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="{% url 'auth:signup' %}" class="btn btn-primary">Sign Up</a>
+                {% endif %}
+            </div>
         </nav>
     </header>
     <div class="container">

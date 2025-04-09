@@ -19,7 +19,6 @@ def index(request):
     # Get category filter from URL parameters
     active_category = request.GET.get('category', 'all')
     
-    # Get all plans and filter if category is specified
     plans = Plan.objects.all()
     if active_category and active_category != 'all':
         plans = plans.filter(category=active_category)

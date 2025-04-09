@@ -34,29 +34,12 @@ python manage.py migrate
 
 ## Running the Application
 
-1. Start the development server:
+Start the development server:
 ```bash
 python manage.py runserver
 ```
 
-The application will be available at `http://127.0.0.1:8000`
-
-## Development
-
-Create a superuser to access the admin interface:
-```bash
-python manage.py createsuperuser
-```
-
-Run tests:
-```bash
-python manage.py test
-```
-
-Collect static files:
-```bash
-python manage.py collectstatic
-```
+Visit [http://your-aws-link-here](http://your-aws-link-here) to view the application.
 
 ## License
 

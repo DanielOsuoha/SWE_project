@@ -1,0 +1,49 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <h1>Leaderboard</h1>
+    
+    <div class="leaderboard-card">
+        <div class="leaderboard-filters">
+            <button class="filter-btn active">This Week</button>
+            <button class="filter-btn">This Month</button>
+            <button class="filter-btn">All Time</button>
+        </div>
+
+        <div class="leaderboard-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Points</th>
+                        <th>Streak</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in leaderboard %}
+                    <tr {% if entry.user == request.user %}class="current-user"{% endif %}>
+                        <td class="rank">{{ forloop.counter }}</td>
+                        <td class="user">{{ entry.user.get_full_name }}</td>
+                        <td class="points">{{ entry.points }}</td>
+                        <td class="streak">{{ entry.streak }} days</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">No entries yet</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

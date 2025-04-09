@@ -64,27 +64,20 @@
             <div class="card h-100 shadow-sm">
                 <div class="row g-0">
                     <div class="col-4">
-                        {% if plan.image %}
-                            <img src="{{ plan.image.url }}" class="img-fluid h-100" 
-                                 style="object-fit: cover;" alt="{{ plan.title }}">
-                        {% else %}
-                            <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-                                <span style="font-size: 2rem;">{{ plan.icon|default:"🎯" }}</span>
-                            </div>
-                        {% endif %}
+                        <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                            <span style="font-size: 2.5rem;">{{ plan.get_icon }}</span>
+                        </div>
                     </div>
                     <div class="col-8">
                         <div class="card-body">
                             <h5 class="card-title">{{ plan.title }}</h5>
                             <p class="card-text">
-                                <span class="badge bg-{{ plan.difficulty|lower }}">
+                                <span class="badge bg-{{ plan.difficulty }}">
                                     {{ plan.get_difficulty_display }}
                                 </span>
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="text-warning">
-                                    {% for i in ""|ljust:plan.rating %}⭐{% endfor %}
-                                </div>
+                                <div class="text-warning">⭐ {{ plan.rating }}</div>
                                 <a href="{% url 'core:plan_detail' plan.id %}" 
                                    class="btn btn-sm btn-outline-primary">View Plan</a>
                             </div>

@@ -12,5 +12,4 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('profile/change-password/', views.change_password, name='change_password'),
     path('plan/<int:pk>/', views.plan_detail, name='plan_detail'),
-    path('save-changes/', views.save_changes, name='save_changes')
     ]

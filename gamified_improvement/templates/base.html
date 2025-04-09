@@ -19,7 +19,7 @@
             </ul>
             <div class="nav-auth">
                 {% if user.is_authenticated %}
-                    <span class="me-3">Welcome, {{ user.get_full_name|default:user.username }}</span>
+                    <span class="me-3">Welcome, {{ user.first_name|default:user.username|title }}</span>
                     <a href="{% url 'auth:logout' %}" class="btn btn-outline-primary">Logout</a>
                 {% else %}
                     <a href="{% url 'auth:login' %}" class="btn btn-outline-primary me-2">Login</a>

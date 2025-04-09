@@ -23,12 +23,13 @@
     </div>
 </div>
 
-<div class="container mb-4">
+<form method="get" class="container mb-4">
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search plans...">
-        <button class="btn btn-outline-secondary" type="button">Search</button>
+        <input type="text" name="search" class="form-control" placeholder="Search plans..." 
+               value="{{ request.GET.search|default:'' }}">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
     </div>
-</div>
+</form>
 
 <div class="container mb-4">
     <h4 class="mb-3">Goal Categories</h4>

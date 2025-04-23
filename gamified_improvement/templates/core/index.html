@@ -113,12 +113,10 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Keep only search functionality
     const searchInput = document.querySelector('input[type="search"]');
     const searchForm = searchInput.closest('form');
     
     searchInput.addEventListener('input', (e) => {
-        // Add a small delay to prevent too many requests
         clearTimeout(searchInput.timeout);
         searchInput.timeout = setTimeout(() => {
             searchForm.submit();

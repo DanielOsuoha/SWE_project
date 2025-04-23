@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Plan, UserPlan, UserGoal
 from .forms import UserProfileForm
+from django.contrib.auth.models import User
 import json
 from django.utils import timezone
 
@@ -49,8 +50,42 @@ def index(request):
 
 
 def leaderboard(request):
-    return render(request, 'core/leaderboard.html')
+    users = User.objects.select_related('profile').all()
 
+    leaderboard_data = [
+        {
+            'username': user.username,
+            'streak': user.profile.streak
+        }
+        for user in users if hasattr(user, 'profile')
+    ]
+
+    leaderboard_data.sort(key=lambda x: x['streak'], reverse=True)
+
+    return render(request, 'core/leaderboard.html', {'leaderboard': leaderboard_data})
+
+
+
+@login_required
+def leaderboard(request):
+    users = User.objects.all()
+
+    leaderboard_data = []
+    for user in users:
+        points = UserGoal.objects.filter(user_plan__user=user, completed=True).count()
+        leaderboard_data.append({
+            'username': user.username,
+            'points': points,
+            'streak': user.profile.streak
+
+        })
+
+    leaderboard_data.sort(key=lambda x: (-x['points'], -x['streak']))
+
+    context = {
+        'leaderboard': leaderboard_data
+    }
+    return render(request, 'core/leaderboard.html', context)
 def friends(request):
     return render(request, 'core/friends.html')
 
@@ -160,24 +195,3 @@ def toggle_goal(request):
     except UserGoal.DoesNotExist:
         return JsonResponse({'success': False}, status=404)
 
-
-from django.contrib.auth.models import User
-
-@login_required
-def leaderboard(request):
-    users = User.objects.all()
-
-    leaderboard_data = []
-    for user in users:
-        points = UserGoal.objects.filter(user_plan__user=user, completed=True).count()
-        leaderboard_data.append({
-            'username': user.username,
-            'points': points,
-        })
-
-    leaderboard_data.sort(key=lambda x: x['points'], reverse=True)
-
-    context = {
-        'leaderboard': leaderboard_data
-    }
-    return render(request, 'core/leaderboard.html', context)

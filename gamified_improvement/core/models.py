@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Plan(models.Model):
     DIFFICULTY_CHOICES = [
@@ -84,3 +86,12 @@ class UserGoal(models.Model):
 
     def __str__(self):
         return f"{self.goal.title} - {self.user_plan.user.username}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    streak = models.IntegerField(default=0)
+    points = models.IntegerField(default=0)  # Optional if you also want to store points
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"

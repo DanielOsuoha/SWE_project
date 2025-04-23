@@ -3,8 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
-from .models import Plan, UserPlan
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from .models import Plan, UserPlan, UserGoal
 from .forms import UserProfileForm
+import json
+from django.utils import timezone
 
 @login_required
 def index(request):
@@ -137,3 +141,25 @@ def start_plan(request, pk):
         messages.info(request, f'You are already working on "{plan.title}".')
     
     return redirect('core:index')
+
+@require_POST
+def toggle_goal(request):
+    data = json.loads(request.body)
+    goal_id = data.get('goal_id')
+    completed = data.get('completed', False)
+    
+    try:
+        user_goal = UserGoal.objects.get(id=goal_id, user_plan__user=request.user)
+        user_goal.completed = completed
+        user_goal.completed_at = timezone.now() if completed else None
+        user_goal.save()
+        
+        # Update progress
+        user_goal.user_plan.update_progress()
+        
+        return JsonResponse({
+            'success': True,
+            'progress': user_goal.user_plan.progress
+        })
+    except UserGoal.DoesNotExist:
+        return JsonResponse({'success': False}, status=404)

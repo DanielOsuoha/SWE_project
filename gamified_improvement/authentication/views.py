@@ -6,6 +6,14 @@ from django.urls import reverse_lazy
 from .forms import SignUpForm
 
 # Create your views here.
+# views.py
+from django.contrib.auth.views import LogoutView
+
+class CustomLogoutView(LogoutView):
+    template_name = 'authentication/logout.html'
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 class CustomLoginView(LoginView):
     template_name = 'authentication/login.html'

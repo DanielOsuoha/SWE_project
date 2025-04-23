@@ -10,9 +10,9 @@ from .forms import UserProfileForm
 import json
 from django.utils import timezone
 
+
 @login_required
 def index(request):
-    # Define available categories
     categories = [
         {'slug': 'fitness', 'name': 'Fitness', 'icon': '💪'},
         {'slug': 'health', 'name': 'Health', 'icon': '🏥'},
@@ -26,18 +26,14 @@ def index(request):
     active_category = request.GET.get('category')
     search_query = request.GET.get('search', '')
 
-    # Base queryset
     plans = Plan.objects.all()
     
-    # Apply category filter if selected
     if active_category and active_category != 'all':
         plans = plans.filter(category=active_category)
 
-    # Apply search filter if present
     if search_query:
         plans = plans.filter(title__icontains=search_query)
 
-    # Split into my plans and discover plans
     my_plans = plans.filter(userplan__user=request.user)
     discover_plans = plans.exclude(userplan__user=request.user)
 

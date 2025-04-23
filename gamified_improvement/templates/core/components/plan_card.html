@@ -26,6 +26,20 @@
                                class="btn btn-sm btn-outline-primary">View Plan</a>
                         {% endif %}
                     </div>
+                    {% if plan.goals.all %}
+                        <div class="mt-3">
+                            <h6 class="mb-2">Goals:</h6>
+                            {% for goal in plan.goals.all %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" disabled id="goal{{ goal.id }}">
+                                    <label class="form-check-label" for="goal{{ goal.id }}">
+                                        {{ goal.title }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                     {% if show_progress %}
                         <div class="progress mt-2" style="height: 5px;">
                             <div class="progress-bar bg-success" 

@@ -159,3 +159,25 @@ def toggle_goal(request):
         })
     except UserGoal.DoesNotExist:
         return JsonResponse({'success': False}, status=404)
+
+
+from django.contrib.auth.models import User
+
+@login_required
+def leaderboard(request):
+    users = User.objects.all()
+
+    leaderboard_data = []
+    for user in users:
+        points = UserGoal.objects.filter(user_plan__user=user, completed=True).count()
+        leaderboard_data.append({
+            'username': user.username,
+            'points': points,
+        })
+
+    leaderboard_data.sort(key=lambda x: x['points'], reverse=True)
+
+    context = {
+        'leaderboard': leaderboard_data
+    }
+    return render(request, 'core/leaderboard.html', context)

@@ -39,7 +39,7 @@ Start the development server:
 python manage.py runserver
 ```
 
-Visit [http://your-aws-link-here](http://your-aws-link-here) to view the application.
+<!--Visit [http://your-aws-link-here](http://your-aws-link-here) to view the application.-->
 
 ## License
 
